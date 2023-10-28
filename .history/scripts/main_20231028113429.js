@@ -72,7 +72,7 @@ const buttonFilter = (event) => {
     <tbody>
     `;
     
-    productList().sort((a, b) => a.type.localeCompare(b.type)).forEach(item => {
+    productList().forEach(item => {
       table += tableRow(item);
     });
 
@@ -88,14 +88,7 @@ const buttonFilter = (event) => {
 const cartTotal = () => {
   const cart = referenceList.filter(taco => taco.inCart)
   const total = cart.reduce((a, b) => a + b.price, 0);
-  const free = cart.some(taco => taco.price <= 0);
   document.querySelector("#cartTotal").innerHTML = total.toFixed(2);
-
-  if (free){
-    document.querySelector('#includes-free').innerHTML = 'INCLUDES FREE ITEMS'
-  } else {
-    document.querySelector('#includes-free').innerHTML = ''
-  }
 }
 
 // RESHAPE DATA TO RENDER TO DOM

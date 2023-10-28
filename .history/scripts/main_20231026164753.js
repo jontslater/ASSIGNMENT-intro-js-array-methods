@@ -9,8 +9,8 @@ const renderCards = (array) => {
   let refStuff = "";
   
   array.forEach((item) =>{
-    refStuff += card(item);
-  });
+    refStuff += item.title;
+  })
   
   renderToDom("#cards", refStuff);
 }
@@ -19,13 +19,7 @@ const renderCards = (array) => {
 // .findIndex() & (.includes() - string method)
 const toggleCart = (event) => {
   if (event.target.id.includes("fav-btn")) {
-   const [,id] = event.target.id.split("--");
-
-   const index = referenceList.findIndex(taco => taco.id === Number(id))
-
-   referenceList[index].inCart = !referenceList[index].inCart
-   cartTotal();
-   renderCards(referenceList);
+   console.log('Clicked Fav btn')
   }
 }
 
@@ -33,32 +27,23 @@ const toggleCart = (event) => {
 // .filter()
 const search = (event) => {
   const eventLC = event.target.value.toLowerCase();
-  const searchBar = referenceList.filter(media =>
-   media.title.toLowerCase().includes(eventLC) ||
-   media.author.toLowerCase().includes(eventLC) ||
-   media.description.toLowerCase().includes(eventLC)
-  )
-  renderCards(searchBar);
+  console.log(eventLC)
 }
 
 // BUTTON FILTER
 // .filter() & .reduce() &.sort() - chaining
 const buttonFilter = (event) => {
   if(event.target.id.includes('free')) {
-    const free = referenceList.filter(item => item.price <= 0)
-    renderCards(free);
+    console.log('FREE')
   }
   if(event.target.id.includes('cartFilter')) {
-    const wishList = referenceList.filter(item => item.inCart)
-    renderCards(wishList);
-    
+    console.log('cartFilter')
   }
   if(event.target.id.includes('books')) {
-    const books = referenceList.filter(item => item.type.toLocaleLowerCase() === 'book');
-    renderCards(books);
+    console.log('books!')
   }
   if(event.target.id.includes('clearFilter')) {
-  renderCards(referenceList);  
+    console.log('clearFilter')
   }
   if(event.target.id.includes('productList')) {
     let table = `<table class="table table-dark table-striped" style="width: 600px">
@@ -72,7 +57,7 @@ const buttonFilter = (event) => {
     <tbody>
     `;
     
-    productList().sort((a, b) => a.type.localeCompare(b.type)).forEach(item => {
+    productList().forEach(item => {
       table += tableRow(item);
     });
 
@@ -86,26 +71,14 @@ const buttonFilter = (event) => {
 // CALCULATE CART TOTAL
 // .reduce() & .some()
 const cartTotal = () => {
-  const cart = referenceList.filter(taco => taco.inCart)
-  const total = cart.reduce((a, b) => a + b.price, 0);
-  const free = cart.some(taco => taco.price <= 0);
+  const total = 0
   document.querySelector("#cartTotal").innerHTML = total.toFixed(2);
-
-  if (free){
-    document.querySelector('#includes-free').innerHTML = 'INCLUDES FREE ITEMS'
-  } else {
-    document.querySelector('#includes-free').innerHTML = ''
-  }
 }
 
 // RESHAPE DATA TO RENDER TO DOM
 // .map()
 const productList = () => {
-  return referenceList.map(item => ({
-    title: item.title, 
-    price: item.price, 
-    item: item.type
-  }))
+  return [{ title: "SAMPLE TITLE", price: 45.00, type: "SAMPLE TYPE" }]
 }
 
 

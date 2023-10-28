@@ -19,26 +19,20 @@ const renderCards = (array) => {
 // .findIndex() & (.includes() - string method)
 const toggleCart = (event) => {
   if (event.target.id.includes("fav-btn")) {
-   const [,id] = event.target.id.split("--");
-
-   const index = referenceList.findIndex(taco => taco.id === Number(id))
-
-   referenceList[index].inCart = !referenceList[index].inCart
-   cartTotal();
-   renderCards(referenceList);
+   console.log('Clicked Fav btn')
   }
 }
 
 // SEARCH
 // .filter()
 const search = (event) => {
+  console.log(event);
   const eventLC = event.target.value.toLowerCase();
   const searchBar = referenceList.filter(media =>
    media.title.toLowerCase().includes(eventLC) ||
    media.author.toLowerCase().includes(eventLC) ||
    media.description.toLowerCase().includes(eventLC)
   )
-  renderCards(searchBar);
 }
 
 // BUTTON FILTER
@@ -72,7 +66,7 @@ const buttonFilter = (event) => {
     <tbody>
     `;
     
-    productList().sort((a, b) => a.type.localeCompare(b.type)).forEach(item => {
+    productList().forEach(item => {
       table += tableRow(item);
     });
 
@@ -86,16 +80,8 @@ const buttonFilter = (event) => {
 // CALCULATE CART TOTAL
 // .reduce() & .some()
 const cartTotal = () => {
-  const cart = referenceList.filter(taco => taco.inCart)
-  const total = cart.reduce((a, b) => a + b.price, 0);
-  const free = cart.some(taco => taco.price <= 0);
+  const total = 0
   document.querySelector("#cartTotal").innerHTML = total.toFixed(2);
-
-  if (free){
-    document.querySelector('#includes-free').innerHTML = 'INCLUDES FREE ITEMS'
-  } else {
-    document.querySelector('#includes-free').innerHTML = ''
-  }
 }
 
 // RESHAPE DATA TO RENDER TO DOM
