@@ -72,7 +72,7 @@ const buttonFilter = (event) => {
     <tbody>
     `;
     
-    productList().sort((a, b) => a.type.localeCompare(b.type)).forEach(item => {
+    productList().forEach(item => {
       table += tableRow(item);
     });
 
